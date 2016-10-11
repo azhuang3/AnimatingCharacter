@@ -28,6 +28,35 @@ void student_computeDancerPoints
    _T=P.G[5]; 
    }
    
+   
+void knee() {
+  //vec HB = 
+  // _K = P(_H, _hk, HB);
+}
+
+//computes ankle
+void ankle() {
+  _A = TriangleTip(_K, _ka, _ab, _B); //compute by triangulation from knee and ball
+}
+
+//computes heel
+void heel() {
+  _E = TriangleTip(_A, _ae, _eb, _B);
+}
+
+//Returns tip C from base AB with |AC|=a and |BC|=b
+pt TriangleTip(pt A, float a, float b, pt B) {
+  float c = d(A,B);
+  
+  //use the law of cosines
+  float angleA = acos((sq(b) + sq(c) - sq(a))/(f*b*c));
+  //float y = a* sin(angleA);
+  //float x = a* cos(angleA);
+  vec AB = V(A,B);
+  
+  return P(A, a, R(AB, radians(angleA))); //return C
+}
+   
 void caplet(pt A, float rA, pt B, float rB) // displays Isosceles Trapezoid of axis(A,B) and half lengths rA and rB
   {
   show(A,rA);
