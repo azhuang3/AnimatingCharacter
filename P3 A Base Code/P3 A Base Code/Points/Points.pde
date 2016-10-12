@@ -49,14 +49,15 @@ void draw()      // executed at each frame
       }
     noStroke(); fill(green);  student_displayDancer(H,K,A,E,B,T);
     student_computeDancerPoints(H,B,_hipAngle); // computes _H,_K,_A,_E,_B,_T  from measures and _hipAngle
-    noFill(); pen(red,2); student_displayDancer(_H,_K,_A,_E,_B,_T);
+    noFill(); //pen(red,2); 
+    student_displayDancer(_H,_K,_A,_E,_B,_T);
     
-    noFill(); pen(red,4); 
+    noFill(); pen(green,4); 
     P.drawCurve(); 
     edge(_A,_B);   
     if(showLetters) 
       { 
-      pen(red,2); 
+      //pen(red,2); 
       showId(_H,"H"); showId(_K,"K"); showId(_A,"A"); showId(_E,"E"); showId(_B,"B");showId(_T,"T");
       }
    

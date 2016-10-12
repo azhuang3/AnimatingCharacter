@@ -49,7 +49,7 @@ pt TriangleTip(pt A, float a, float b, pt B) {
   float c = d(A,B);
   
   //use the law of cosines
-  float angleA = acos((sq(b) + sq(c) - sq(a))/(f*b*c));
+  float angleA = acos((sq(b) + sq(c) - sq(a))/(2*b*c));
   //float y = a* sin(angleA);
   //float x = a* cos(angleA);
   vec AB = V(A,B);
