@@ -35,7 +35,8 @@ void draw()      // executed at each frame
   
     background(white); // clear screen and paints white background
     pen(grey,3); line(0,height-50,width,height-50);  // show ground line
-    
+    println("distance eb" + _eb);
+    println("distance hk: " +_hk);
     pt H=P.G[0], K=P.G[1], A=P.G[2], E=P.G[3], B=P.G[4], T=P.G[5]; // local copy of dancer points from points of Polyloop P
     // Hip       Knee      Ankle    hEel       Ball      Toe
  
@@ -47,17 +48,18 @@ void draw()      // executed at each frame
       pen(black,2); 
       showId(_H,"H"); showId(_K,"K"); showId(_A,"A"); showId(_E,"E"); showId(_B,"B");showId(_T,"T");
       }
-    noStroke(); fill(green);  student_displayDancer(H,K,A,E,B,T);
+    noStroke(); fill(yellow); student_displayDancer(H,K,A,E,B,T);
+    noStroke(); fill(green);  student_displayDancer(_H,_K,_A,_E,_B,_T);
     student_computeDancerPoints(H,B,_hipAngle); // computes _H,_K,_A,_E,_B,_T  from measures and _hipAngle
-    noFill(); //pen(red,2); 
+    noFill(); pen(red,2); 
     student_displayDancer(_H,_K,_A,_E,_B,_T);
     
-    noFill(); pen(green,4); 
+    noFill(); pen(black,4); 
     P.drawCurve(); 
     edge(_A,_B);   
     if(showLetters) 
       { 
-      //pen(red,2); 
+      pen(red,2); 
       showId(_H,"H"); showId(_K,"K"); showId(_A,"A"); showId(_E,"E"); showId(_B,"B");showId(_T,"T");
       }
    

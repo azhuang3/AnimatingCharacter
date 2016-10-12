@@ -26,6 +26,9 @@ void student_computeDancerPoints
    _A=P.G[2]; 
    _E=P.G[3]; 
    _T=P.G[5]; 
+   
+   ankle();
+   heel();
    }
    
    
@@ -49,12 +52,14 @@ pt TriangleTip(pt A, float a, float b, pt B) {
   float c = d(A,B);
   
   //use the law of cosines
-  float angleA = acos((sq(b) + sq(c) - sq(a))/(2*b*c));
-  //float y = a* sin(angleA);
-  //float x = a* cos(angleA);
-  vec AB = V(A,B);
+  float angC = acos((sq(b) + sq(a) - sq(c))/(2*b*a));
+  float angA = ((b * sin(angC))/ c); 
+
+  vec AB = U(A,B);
   
-  return P(A, a, R(AB, radians(angleA))); //return C
+  pt C = P(A, a, R(AB, angA));
+ 
+  return P(A, a, R(AB, angA)); //return C
 }
    
 void caplet(pt A, float rA, pt B, float rB) // displays Isosceles Trapezoid of axis(A,B) and half lengths rA and rB
@@ -78,8 +83,7 @@ void cone(pt A, float rA, pt B, float rB) // displays Isosceles Trapezoid of axi
   LA.show();
 
   beginShape(); v(LB); v(LA); endShape(CLOSE);
-  //beginShape(); v(RB); v(RA); endShape(CLOSE);
-  //beginShape(); v(LB); v(RB); v(RA); v(LA); endShape(CLOSE);
+
   }
   
   void myCone(pt A, float rA, pt B, float rB) {
