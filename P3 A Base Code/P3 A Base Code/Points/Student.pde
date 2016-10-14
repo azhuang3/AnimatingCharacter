@@ -27,14 +27,23 @@ void student_computeDancerPoints
    _E=P.G[3]; 
    _T=P.G[5]; 
    
+   _B.y = height - floor - _rB;
+   _H.y = height-floor-(height-150);
+   vec BT = U(_B, _T);
+   _T = P(B, _bt, BT);
+   _T.y = height-floor;
+   //_T = P(B, _bt, BT);
+   
+   
+   //knee();
    ankle();
    heel();
    }
    
    
 void knee() {
-  //vec HB = 
-  // _K = P(_H, _hk, HB);
+  vec HB = U(_H, _B); 
+  _K = P(_H, _hk, HB);
 }
 
 //computes ankle
