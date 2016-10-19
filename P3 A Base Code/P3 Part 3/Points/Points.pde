@@ -10,7 +10,7 @@ boolean animate=false, fill=false, timing=false;
 boolean showLetters=true; // toggles to display vector interpoations
 int ms=0, me=0; // milli seconds start and end for timing
 int npts=20000; // number of points
-float _hipAngle=-PI/9;
+float _hipAngle=-PI/6;
 pt _H=P(), _K=P(), _A=P(), _E=P(), _B=P(), _T=P(); // centers of Hip, Knee, Ankle, hEel, Ball, Toe
 float _rH=100, _rK=50, _rA=20, _rE=25, _rB=15, _rT=5; // radii of Hip, Knee, Ankle, hEel, Ball, Toe
 
@@ -18,12 +18,14 @@ float _rH=100, _rK=50, _rA=20, _rE=25, _rB=15, _rT=5; // radii of Hip, Knee, Ank
 float _hk=319.979, _ka=266.46463, _ae=28.718777, _eb=117.23831, _ab=113.9619, _bt=44.75581;
 //_eb=117.23831,_ae=28.718777
 float _h=150; // height of _H
+//_h=150
 float floor = height-50;
+
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
   {
   size(2000, 700);            // window size
-  frameRate(30);             // render 30 frames per second
+  frameRate(1);             // render 30 frames per second
   smooth();                  // turn on antialiasing
  // myFace = loadImage("data/pic.jpg");  // load image from file pic.jpg in folder data *** replace that file with your pic of your own face
   P.declare(); // declares all points in P. MUST BE DONE BEFORE ADDING POINTS 
@@ -64,11 +66,15 @@ void draw()      // executed at each frame
     
     //CONSTRUCTING TEST LEG
     fill(yellow);
-    pt HTest = new pt(10, height-floor-(height-150));
-    pt BTest = new pt(15, height - floor - _rB);
-    pt BTest2 = new pt(200, height - floor - _rB);
+    pt HTest = new pt(100, height-floor-(height-150));
+    pt BTest = new pt(100, height - floor - _rB);
+    pt BTest2 = new pt(400, height - floor - _rB);
     Leg testLeg = new Leg(HTest, BTest, _hipAngle);
     Leg testLeg2 = new Leg(HTest, BTest2, _hipAngle);
+    testLeg2.changeSupport();
+    
+    //TESTING TRANSFER
+    testLeg.transfer(testLeg2);
     testLeg.student_displayDancer();
     testLeg2.student_displayDancer();
     
