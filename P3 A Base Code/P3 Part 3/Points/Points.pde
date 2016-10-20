@@ -10,7 +10,7 @@ boolean animate=false, fill=false, timing=false;
 boolean showLetters=true; // toggles to display vector interpoations
 int ms=0, me=0; // milli seconds start and end for timing
 int npts=20000; // number of points
-float _hipAngle=-PI/6;
+float _hipAngle=-PI/12;
 pt _H=P(), _K=P(), _A=P(), _E=P(), _B=P(), _T=P(); // centers of Hip, Knee, Ankle, hEel, Ball, Toe
 float _rH=100, _rK=50, _rA=20, _rE=25, _rB=15, _rT=5; // radii of Hip, Knee, Ankle, hEel, Ball, Toe
 
@@ -19,13 +19,21 @@ float _hk=319.979, _ka=266.46463, _ae=28.718777, _eb=117.23831, _ab=113.9619, _b
 //_eb=117.23831,_ae=28.718777
 float _h=150; // height of _H
 //_h=150
+float hx = 200;
+float bx = 200;
+float hx2 = 580;
 float floor = height-50;
+
+boolean transfer = true;
+boolean collect = false;
+boolean rotate = false;
+boolean aim = false;
 
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
   {
   size(2000, 700);            // window size
-  frameRate(1);             // render 30 frames per second
+  frameRate(30);             // render 30 frames per second
   smooth();                  // turn on antialiasing
  // myFace = loadImage("data/pic.jpg");  // load image from file pic.jpg in folder data *** replace that file with your pic of your own face
   P.declare(); // declares all points in P. MUST BE DONE BEFORE ADDING POINTS 
@@ -37,16 +45,14 @@ void setup()               // executed once at the begining
 void draw()      // executed at each frame
   {
     //_hipAngle++;
-    //_H.x+=6;
-    //_B.x+=6;
+   // _H.x+=6;
+   //_B.x+=3;
   if(recordingPDF) startRecordingPDF(); // starts recording graphics to make a PDF
   
     background(white); // clear screen and paints white background
     pen(grey,3); line(0,height-50,width,height-50);  // show ground line
     pt H=P.G[0], K=P.G[1], A=P.G[2], E=P.G[3], B=P.G[4], T=P.G[5]; // local copy of dancer points from points of Polyloop P
     // Hip       Knee      Ankle    hEel       Ball      Toe
-    //pt _H=P.G[0], _B=P.G[4];
-   // _hipAngle++;
  
     noFill(); pen(blue,4); 
     //P.drawCurve(); 
@@ -65,20 +71,37 @@ void draw()      // executed at each frame
 
     
     //CONSTRUCTING TEST LEG
-    fill(yellow);
-    pt HTest = new pt(100, height-floor-(height-150));
-    pt BTest = new pt(100, height - floor - _rB);
-    pt BTest2 = new pt(400, height - floor - _rB);
+    pt HTest = new pt(hx, height-floor-(height-_h));
+    pt BTest = new pt(bx, height - floor - _rB);
+    pt BTest2 = new pt(hx2, height - floor - _rB);
     Leg testLeg = new Leg(HTest, BTest, _hipAngle);
     Leg testLeg2 = new Leg(HTest, BTest2, _hipAngle);
-    testLeg2.changeSupport();
     
     //TESTING TRANSFER
-    testLeg.transfer(testLeg2);
+    if (transfer){
+      if(hx<hx2) { hx+=5;}
+      else if (hx>=hx2) {transfer = false; collect = true;}
+    }
+    
+    //TESTING COLLECT
+    if (collect) {
+      if (bx<hx2){bx+=5;}
+      else if(bx>=hx2) {collect = false; aim=true;}
+    }
+    
+    //TESTING AIM
+    if (aim) {
+      if (abs(hx2-bx)<380) {bx+=5;}
+      else if (abs(hx2-bx)>=380) {aim = false; transfer = true;}
+    }
+
+    testLeg.student_computeDancerPoints(HTest, BTest, _hipAngle);
+    testLeg2.student_computeDancerPoints(HTest, BTest2, _hipAngle);
+    fill(green);
     testLeg.student_displayDancer();
+    fill(red);
     testLeg2.student_displayDancer();
     
-    //println("HTest x: "+HTest.x);
     
     noFill(); pen(black,4); 
     //P.drawCurve(); 

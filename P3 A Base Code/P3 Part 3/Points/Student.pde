@@ -9,7 +9,7 @@ void student_displayDancer(pt H, pt K, pt A, pt E, pt B, pt T) // displays dance
   caplet(E,_rE,B,_rB);
   caplet(B,_rB,T,_rT);
   caplet(A,_rA,B,_rB);
-  noFill(); pen(magenta,2); edge(H,P(H,R(V(0,100),_hipAngle)));
+  noFill(); noStroke(); edge(H,P(H,R(V(0,100),_hipAngle)));
   }
 
 // Recompute global dancer points (_H,..._T) from Hip center, Ball center, leg dimensions, and angle a btweeen HB and HK
@@ -68,9 +68,8 @@ void ankle() {
 void heel() {
   _E = TriangleTip(_A, _ae, _eb, _B);
   if (_E.y > height-floor - _rE) {
-    println("yes");
     _E.y = height-floor - _rE;
-  }else{println("no");}
+  }//else{println("no");}
   
 }
 

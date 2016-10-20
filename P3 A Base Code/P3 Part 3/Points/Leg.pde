@@ -16,7 +16,7 @@ class Leg {
    T=P.G[5]; 
    
    B.y = height - floor - _rB;
-   H.y = height-floor-(height-150);
+   H.y = height-floor-(height-_h);
    vec BT = U(B, T);
    T = P(B, _bt, BT);
    T.x = B.x +40;
@@ -52,8 +52,11 @@ class Leg {
   }
 
   //computes heel
-  pt heel() {
-    return E = TriangleTip(A, _ae, _eb, B);
+  void heel() {
+     E = TriangleTip(A, _ae, _eb, B);
+    if (E.y > height-floor - _rE) {
+      E.y = height-floor - _rE;
+    }
   }
 
   //Returns tip C from base AB with |AC|=a and |BC|=b
@@ -90,14 +93,15 @@ class Leg {
    T=P.G[5]; 
    
    B.y = height - floor - _rB;
-   H.y = height-floor-(height-150);
+   H.y = height-floor-(height-_h);
    vec BT = U(B, T);
    T = P(B, _bt, BT);
+   T.x = B.x +40;
    T.y = height-floor;
    //_T = P(B, _bt, BT);
    
    
-   //knee();
+   knee();
    ankle();
    heel();
    }
@@ -111,15 +115,20 @@ void student_displayDancer() // displays dancer using dimensions
   caplet(E,_rE,B,_rB);
   caplet(B,_rB,T,_rT);
   caplet(A,_rA,B,_rB);
-  noFill(); pen(magenta,2); edge(H,P(H,R(V(0,100),hipAngle)));
+  noFill(); noStroke(); edge(H,P(H,R(V(0,100),hipAngle)));
   }
 
 //TRANSFER
 void transfer(Leg otherLeg) {
   while(H.x != otherLeg.B.x) {
     H.x++;
-    //otherLeg.H.x++;
+    otherLeg.H.x++;
   }
+  vec HB = V(H,B);
+  //vec HBOtherLeg = V(P(otherLeg.B.x, H.y), B);
+  println("Hip at: "+H.x);
+  //HB = L(HB, HBOtherLeg, t);
+  
   this.changeSupport();
   otherLeg.changeSupport();
 }// end of transfer
