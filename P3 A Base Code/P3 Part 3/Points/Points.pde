@@ -29,11 +29,13 @@ boolean collect = false;
 boolean rotate = false;
 boolean aim = false;
 
+boolean isLeft = true;
+
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
   {
   size(2000, 700);            // window size
-  frameRate(30);             // render 30 frames per second
+  frameRate(20);             // render 30 frames per second
   smooth();                  // turn on antialiasing
  // myFace = loadImage("data/pic.jpg");  // load image from file pic.jpg in folder data *** replace that file with your pic of your own face
   P.declare(); // declares all points in P. MUST BE DONE BEFORE ADDING POINTS 
@@ -79,20 +81,44 @@ void draw()      // executed at each frame
     
     //TESTING TRANSFER
     if (transfer){
-      if(hx<hx2) { hx+=5;}
-      else if (hx>=hx2) {transfer = false; collect = true;}
+      if (isLeft) {
+        if(hx<hx2) { hx+=5;}
+        else if (hx>=hx2) {transfer = false; collect = true;}
+      }
+      else {
+        if(bx>hx) { hx+=5;}
+        else if (bx<=hx) { transfer = false; collect = true;}
+      }
     }
     
     //TESTING COLLECT
     if (collect) {
-      if (bx<hx2){bx+=5;}
-      else if(bx>=hx2) {collect = false; aim=true;}
+      if (isLeft) {
+        if (bx<hx2){bx+=10;}
+        else if(bx>=hx2) {collect = false; aim=true;}
+      }
+      else {
+        if(hx2<hx) { hx2+=5;}
+        else if (hx2>=hx) { collect = false; aim = true;}
+      }
     }
     
     //TESTING AIM
     if (aim) {
-      if (abs(hx2-bx)<380) {bx+=5;}
-      else if (abs(hx2-bx)>=380) {aim = false; transfer = true;}
+      if (isLeft) {
+        if (abs(hx2-bx)<380) {bx+=5;}
+        else if (abs(hx2-bx)>=380) {
+          aim = false; transfer = true;
+          isLeft = false;
+        }
+      }
+      else {
+        if(abs(hx2-bx)<380) { hx2+=5;}
+        else if (abs(hx2-bx)>=380) {
+          aim = false; transfer = true;
+          isLeft = true;
+        }
+      }
     }
 
     testLeg.student_computeDancerPoints(HTest, BTest, _hipAngle);
