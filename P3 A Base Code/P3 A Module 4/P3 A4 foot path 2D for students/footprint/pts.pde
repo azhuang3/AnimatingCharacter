@@ -337,6 +337,7 @@ class pts
       float ang = acos(50/d(B,C));
       //50 is radius of circle
       pt newB = P(B, 50, R(U(B,C), -ang));
+      pt initialB = P(B, 50, R(U(B,A), ang));
       
       stroke(grey);
       noFill();
@@ -344,8 +345,11 @@ class pts
       
       fill(red);
       newB.show();
+      fill(green);
+      initialB.show();
       
-      showDancerOnLeft(A, P.L[p(pv)],B, newB, P.L[pv], P.G[pv], t);
+      showDancerOnLeft(A, P.L[p(pv)],B, initialB, P.L[pv], P.G[pv], t);
+      //showDancerOnLeft(A, P.L[p(pv)],B, newB, P.L[pv], P.G[pv], t);
       
       //showDancerOnLeft(P.G[p(p(pv))],P.L[p(pv)],P.G[p(pv)],P.L[pv],P.G[pv],t);
     }
@@ -357,6 +361,8 @@ class pts
       float ang = acos(50/d(B,C));
       //50 is radius of circle
       pt newB = P(B, 50, R(U(B,C), ang));
+      pt initialB = P(B, 50, R(U(B,A), -ang));
+
       
       stroke(grey);
       noFill();
@@ -364,8 +370,11 @@ class pts
       
       fill(red);
       newB.show();
+      fill(green);
+      initialB.show();
       
-      showDancerOnRight(A, P.L[p(pv)], B, newB, P.L[pv], C, t);
+      showDancerOnRight(A, P.L[p(pv)],B, initialB, P.L[pv], P.G[pv], t);
+     // showDancerOnRight(A, P.L[p(pv)], B, newB, P.L[pv], C, t);
       //showDancerOnRight(P.G[p(p(pv))],P.L[p(pv)],P.G[p(pv)],P.L[pv],P.G[pv],t);
     }
     }//End showDancer

@@ -29,9 +29,13 @@ void showDancerOnRight(pt A, char b, pt B, pt newB, char c, pt C, float t)  // R
   vec XL = U(X,L);
   vec AB = U(A,B);
   vec BA = U(B,A);
+  vec BC = U(B,C);
+  vec CB = U(C,B);
   vec XLnegate = U(L,X);
-  pt leftStart = P(X, 50, R(AB));
-  pt rightStart = P(X, 50, R(BA));
+  //pt leftStart = P(X, 50, R(AB));
+  //pt rightStart = P(X, 50, R(BA));
+  pt leftStart = P(X, 50, R(BC));
+  pt rightStart = P(X, 50, R(CB));
   
   //rotate - maybe create is at a function in pv that passes in leftStart and rightStart???
   vec LR = U(rightStart, leftStart);
@@ -48,7 +52,7 @@ void showDancerOnRight(pt A, char b, pt B, pt newB, char c, pt C, float t)  // R
   ellipse(rightStart.x, rightStart.y, 32, 32);
   
   fill(blue); show(X,16); 
-  pen(blue,2); arrow(X,40,AB);
+  pen(blue,2); arrow(X,40,BC);
   
   
   //showDirectionVec(X, rightStart);
@@ -70,9 +74,13 @@ void showDancerOnLeft(pt A, char b, pt B, pt newB, char c, pt C, float t)  // R=
   vec XLnegate = U(L,X);
   vec AB = U(A,B);
   vec BA = U(B,A);
+  vec BC = U(B,C);
+  vec CB = U(C,B);
   
-  pt leftStart = P(X, 50, R(AB));
-  pt rightStart = P(X, 50, R(BA));
+ //pt leftStart = P(X, 50, R(AB));
+  //pt rightStart = P(X, 50, R(BA));
+  pt leftStart = P(X, 50, R(BC));
+  pt rightStart = P(X, 50, R(CB));
   
   
   fill(lime); cone(leftStart,16,L,8); show(L,8); 
@@ -83,7 +91,7 @@ void showDancerOnLeft(pt A, char b, pt B, pt newB, char c, pt C, float t)  // R=
   ellipse(rightStart.x, rightStart.y, 32, 32);
   
   fill(blue); show(X,16); 
-  pen(blue,2); arrow(X,40,AB);
+  pen(blue,2); arrow(X,40,BC);
 
   
   //showDirectionVec(X, leftStart);
