@@ -70,7 +70,7 @@ vec V(pt P, pt Q) {return new vec(Q.x-P.x,Q.y-P.y,Q.z-P.z);};                   
 vec U(vec V) {float n = V.norm(); if (n<0.0000001) return V(0,0,0); else return V(1./n,V);};           // V/||V||
 vec U(pt P, pt Q) {return U(V(P,Q));};                                                                 // PQ/||PQ||
 vec U(float x, float y, float z) {return U(V(x,y,z)); };                                               // make vector (x,y,z)
-vec N(vec U, vec V) {return V( U.y*V.z-U.z*V.y, U.z*V.x-U.x*V.z, U.x*V.y-U.y*V.x); };                  // UxV cross product (normal to both)
+vec N(vec U, vec V) {return V( U.y*V.z-U.z*V.y, U.z*V.x-U.x*V.z, U.x*V.y-U.y*V.x);};                  // UxV cross product (normal to both)
 vec N(pt A, pt B, pt C) {return N(V(A,B),V(A,C)); };                                                   // normal to triangle (A,B,C), not normalized (proportional to area)
 vec B(vec U, vec V) {return U(N(N(U,V),U)); }                                                          // normal to U in plane (U,V)
 vec Normal(vec V) {                                                                                    // vector orthogonal to V
@@ -160,3 +160,14 @@ void show(pt P, String s) {text(s, P.x, P.y, P.z); }; // prints string s in 3D a
 void show(pt P, String s, vec D) {text(s, P.x+D.x, P.y+D.y, P.z+D.z);  }; // prints string s in 3D at P+D (offset vector)
 void show(pt P, float r) {pushMatrix(); translate(P.x,P.y,P.z); sphere(r); popMatrix();};                          // render sphere of radius r and center P
 void showShadow(pt P, float r) {pushMatrix(); translate(P.x,P.y,0); scale(1,1,0.01); sphere(r); popMatrix();}      // render shadow on the floot of sphere of radius r and center P
+void showCircle(pt P, float r) {
+  // draw the circle you will travel over
+  //float ang = acos(24/d(B,C));
+  ////24 is the radius of the circle
+  //pt start = P(A, 24, B);
+  //pt initialB = R(start, -ang, B);
+  pushMatrix(); 
+  translate(P.x, P.y, 0); scale(1,1,0.01); noFill(); stroke(grey); noFill();
+  sphere(r); 
+  popMatrix();
+}

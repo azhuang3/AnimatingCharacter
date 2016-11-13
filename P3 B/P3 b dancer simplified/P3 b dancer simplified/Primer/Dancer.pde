@@ -1,6 +1,7 @@
 // Student's should use this to render their model
 
 
+//showDancer will take in a leg object instead.
 void showDancer(pt LeftFoot, float transfer, pt RightFoot, vec Forward)
   {
   float footRadius=3, kneeRadius = 6,  hipRadius=12 ; // radius of foot, knee, hip
@@ -13,8 +14,10 @@ void showDancer(pt LeftFoot, float transfer, pt RightFoot, vec Forward)
   vec Up = V(0,0,1); // up vector
   
   vec Right = N(Up,Forward); // side vector pointing towards the right
+  //vec Right = V(0,0,1);
   
   // BODY
+  //body(LeftFoot, transfer, RightFoot, bodyHeight, Forward, Up);
   pt BodyProjection = L(LeftFoot,1./3+transfer/3,RightFoot); // floor projection of B
   pt BodyCenter = P(BodyProjection,bodyHeight,Up); // Body center
   //Centr of BodyTorso?
@@ -49,11 +52,6 @@ void showDancer(pt LeftFoot, float transfer, pt RightFoot, vec Forward)
   fill(red);  sphere(RightHip,hipRadius);
   pt LeftHip =  P(BodyCenter,-hipSpread,Right);
   fill(green);  sphere(LeftHip,hipRadius);
-  
-  ////TORSO Testing
-  //pt torsoCenter = P(BodyTorso, hipSpread, Up);
-  //fill(blue); sphere(torsoCenter, hipRadius);
-  //captletSection(BodyTorso, hipRadius, Pelvis, pelvisRadius);
   
 
   // KNEES AND LEGs
@@ -91,4 +89,19 @@ void showDancer(pt LeftFoot, float transfer, pt RightFoot, vec Forward)
   
 void capletSection(pt A, float a, pt B, float b) { // cone section surface that is tangent to Sphere(A,a) and to Sphere(B,b)
   coneSection(A,B,a,b);
-  }  
+  } 
+
+//Body
+void body(pt LeftFoot, float transfer, pt RightFoot, float bodyHeight, vec Forward, vec Up) {
+  
+  pt BodyProjection = L(LeftFoot,1./3+transfer/3,RightFoot); // floor projection of B
+  pt BodyCenter = P(BodyProjection,bodyHeight,Up); // Body center
+  //Centr of BodyTorso?
+  pt BodyTorso = P(BodyProjection, bodyHeight+10, Up);
+  pt BodyTorso2 = P(BodyProjection, bodyHeight+10, Up);
+  fill(blue); showShadow(BodyCenter,5); // sphere(BodyCenter,hipRadius);
+  fill(blue); arrow(BodyCenter,V(100,Forward),5); // forward arrow
+}
+
+void transferBodyCenter(pt BodyCenter) {
+}

@@ -98,15 +98,27 @@ class pts // class for manipulaitng and displaying pointclouds or polyloops in 3
     for(int k=0; k<nv; k++) {int i=k+s; float [] xy = float(split(ss[i],",")); G[k].setTo(xy[0],xy[1],xy[2]);}
     pv=0;
     }; 
-    
+  
+  void next() {pv=n(pv);}
+  int n(int v) {return (v+1)%nv;}
+  int p(int v) {if(v==0) return nv-1; else return v-1;}
+  
   //created by Amy - draw polyloop on the floor
   void drawCurve() {
     beginShape(); 
-      //vertex(A); vertex(B); vertex(C); vertex(D); 
+      stroke(grey); noFill();
       for (int v=0; v<nv; v++) {
         vertex(G[v]);
       }
     endShape(CLOSE);
-  }; 
+    for( int v=0; v<nv; v++) {
+      fill(white); noStroke(); 
+      showShadow(G[v], 4);
+    }
+  };
+  
+  //DISPLAY
+  
+
 
 } // end of pts class
