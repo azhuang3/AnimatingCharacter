@@ -7,6 +7,9 @@ int index = 2;
 
 pt A, B, C;
 pt RightFoot, LeftFoot;
+Leg person1;
+
+vec Forward = V(1,0,0);
 
 //  ****************** dancer phase ***********************
 boolean transfer = true;
@@ -44,15 +47,11 @@ void draw() {
   P.drawCurve();
   noStroke();
   
-
-  vec ForwardDirection = V(1,0,0);
   // Footprints shown as reg, green, blue disks on the floor 
   //showNaiveDancer(A, s, B, ForwardDirection);  // THIS CALLS YOUR CODE IN TAB "Dancer"
   //showDancer(A, s, B, ForwardDirection);  // THIS CALLS YOUR CODE IN TAB "Dancer"
-  if (isLeft) {Leg person1 = new Leg(LeftFoot, s, RightFoot, ForwardDirection);}
-  else {Leg person1 = new Leg(LeftFoot, s, RightFoot, ForwardDirection);}
-  println("isLeft? "+isLeft);
-
+  if (isLeft) {person1 = new Leg(LeftFoot, s, RightFoot, Forward);}
+  else {person1 = new Leg(LeftFoot, s, RightFoot, Forward);}
    
 
  
@@ -75,7 +74,6 @@ void draw() {
        //s = 0;
        transfer = false;
        collect = true;
-       println("s: "+ s);
      }
    //} 
  }// end transfer
@@ -87,7 +85,6 @@ void draw() {
       float ang = acos(24/d(A,B));
       //24 is the radius of the circle
       pt start = P(B, 24, U(B,A));
-      println("start: "+start.x);
       fill(red); show(start, 5);
       pt initialB = R(start, -ang, B);
       
@@ -95,7 +92,6 @@ void draw() {
       fill(red); show(initialB, 5);
       t+=0.1;
      } else if (!isLeft) {
-       println("get's in");
        float ang = acos(24/d(B,A));
        pt start = P(B, 24, U(B,A));
        fill(red); show(start, 5);
@@ -113,7 +109,15 @@ void draw() {
  //------------------------------------------------------------
  
  if (rotate) {
-   //fill(red); show(initialB, 5);
+   
+   vec AB = U(A,B); arrow(person1.getBodyCenter(),AB,5);
+   vec BC = U(B,C);
+   float a = angle(AB, BC);
+   println("angle a: "+a);
+   //for (float i=0; i<=a; i+=0.1) {
+   //  println("i: "+i);
+     Forward = R(Forward, a, person1.Right, Forward);
+   //}
    rotate = false;
    aim = true;
  }// end rotate

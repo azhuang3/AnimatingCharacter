@@ -26,12 +26,7 @@ class Leg {
     showCircle(B, hipSpread*2);
   }
   // Student's should use this to render their model
-  
-  void setRightFoot() {
-    pt LeftFoot=B;
-    pt RightFoot = L(A, transfer, B);
-    s+=0.1;
-  }
+
  
   //bodyProjection - floor projection of B
   //looks like transfer is the key to .... transfer!!
@@ -55,7 +50,9 @@ class Leg {
     //pt BodyTorso = getBodyTorso();
     //pt BodyTorso2 = P(getBodyProjection(), bodyHeight+10, Up);
     fill(blue); showShadow(BodyCenter,5); // sphere(BodyCenter,hipRadius);
-    fill(blue); arrow(BodyCenter,V(100,Forward),5); // forward arrow    
+    fill(blue); arrow(BodyCenter,V(100,Forward),5); // forward arrow 
+    arrow(BodyCenter, V(100,Up),5);
+    arrow(BodyCenter, V(100,Right),5);
   }
  
   //get right ankle
