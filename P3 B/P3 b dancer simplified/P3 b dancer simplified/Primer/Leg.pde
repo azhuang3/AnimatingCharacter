@@ -3,6 +3,8 @@ class Leg {
   float transfer;
   vec Forward;
   
+  float hipAngle = -PI/12;
+  
   float footRadius=3, kneeRadius = 6,  hipRadius=12 ; // radius of foot, knee, hip
   float hipSpread = hipRadius; // half-displacement between hips
   float bodyHeight = 100; // height of body center B
@@ -10,9 +12,9 @@ class Leg {
   float pelvisHeight=10, pelvisForward=hipRadius/2, pelvisRadius=hipRadius*1.3; // vertical distance form BodyCenter to Pelvis 
   float LeftKneeForward = 20; // arbitrary knee offset for mid (B,H)
   
-  vec Up = V(0,0,1); // up vector
+  vec Up = U(0,0,1); // up vector
   //vec Right = N(Up,Forward); // side vector pointing towards the right
-  vec Right = V(1,0,0);
+  vec Right = U(1,0,0);
   
  // Leg(){
   Leg(pt LeftFoot, float transfer, pt RightFoot, vec Forward) {
@@ -22,7 +24,7 @@ class Leg {
     this.Forward = Forward;
     Right = N(Up,Forward); // side vector pointing towards the right
     
-    body(); ankle(); feet(); hip(); knee(); pelvis(); torso();
+    body(); knee(); ankle(); feet(); hip(); pelvis(); torso(); shoulder(); head();
     showCircle(B, hipSpread*2);
   }
   // Student's should use this to render their model
@@ -40,6 +42,8 @@ class Leg {
   
   pt getBodyTorso() { return  P(getBodyProjection(), bodyHeight+20, Up);}
   pt getChest() { return P(getBodyProjection(), bodyHeight+40, Up);}
+  pt getShoulder() {return P(getChest(), 20, Up);}
+  pt getHead() { return P(getChest(), 45, Up);}
   
   // BODY
   void body() {
@@ -51,8 +55,8 @@ class Leg {
     //pt BodyTorso2 = P(getBodyProjection(), bodyHeight+10, Up);
     fill(blue); showShadow(BodyCenter,5); // sphere(BodyCenter,hipRadius);
     fill(blue); arrow(BodyCenter,V(100,Forward),5); // forward arrow 
-    arrow(BodyCenter, V(100,Up),5);
-    arrow(BodyCenter, V(100,Right),5);
+    //arrow(BodyCenter, V(100,Up),5);
+    //arrow(BodyCenter, V(100,Right),5);
   }
  
   //get right ankle
@@ -87,6 +91,7 @@ class Leg {
   pt getRightHip() { return P(getBodyCenter(),hipSpread,Right);}
   pt getLeftHip() { return P(getBodyCenter(),-hipSpread,Right);}
   
+  
   // HIPS
   void hip() {
     pt RightHip =  getRightHip();
@@ -94,9 +99,30 @@ class Leg {
     pt LeftHip =  getLeftHip();
     fill(green);  sphere(LeftHip,hipRadius);
   }
+  
+  void shoulder() {
+    pt rightShoulder = P(getShoulder(), hipSpread, Right);
+    fill(blue); sphere(rightShoulder, 8);
+    pt leftShoulder = P(getShoulder(), -hipSpread, Right); 
+    sphere(leftShoulder,8); 
+    capletSection(rightShoulder, 8, leftShoulder, 8);
+    //capletSection(rightShoulder, 8, getChest(), pelvisRadius);
+    //capletSection(leftShoulder, 6, getChest(), pelvisRadius);  
+  }
 
+  void head() {
+    pt head = getHead();
+    fill(blue); sphere(head, 16);
+  }
+  
   // KNEES AND LEGs
   void knee() {
+    vec rightKnee = U(getRightHip(),getRightAnkle());
+    vec leftKnee = U(getLeftHip(), getLeftAnkle());
+    
+    //rightKnee = P(getRightHip(),50, R(rightKnee, hipAngle, Up, Forward));
+    //leftKnee = P(getLeftHip(),50, R(leftKnee, hipAngle));
+    
     float RightKneeForward = 20;
     pt RightMidleg = P(getRightHip(),getRightAnkle());
     pt RightKnee =  P(RightMidleg, RightKneeForward,Forward);
@@ -127,16 +153,39 @@ class Leg {
   //TORSO Testing
   void torso() {
     pt torsoCenter = P(getBodyTorso(), hipSpread, Up);
-    pt chest = P(getChest(), hipSpread, Up);
+    pt chest = P(getChest(), pelvisRadius, Up);
     fill(blue); sphere(torsoCenter, hipRadius);
-    fill(blue); sphere(chest, hipRadius);
+    sphere(chest, pelvisRadius);
     capletSection(torsoCenter, hipRadius, getPelvis(), pelvisRadius);
-    capletSection(chest, hipRadius, torsoCenter, hipRadius);
+    capletSection(chest, pelvisRadius, torsoCenter, hipRadius);
   }
 
   
 void capletSection(pt A, float a, pt B, float b) { // cone section surface that is tangent to Sphere(A,a) and to Sphere(B,b)
+  float diff = 0;
+  float dist = d(A, B);
+  float l = 0;
+  float littleA = 0;
+  float bigA = 0;
+  vec AB = U(A,B);
+  vec BA = U(B,A);
+  
+  if (a>b) { 
+      diff = a - b;
+      l = sqrt(sq(dist) - sq(diff));   
+    } else { 
+      diff = b - a;
+      l = sqrt(sq(dist) - sq(diff));
+  }
+  
+  bigA = acos(diff/dist);
+  float x = a*sin(bigA);
+  pt newA = P(A, x, AB);
+  pt newB = P(B, x, AB);
+  //littleA = radians(90-degrees(bigA));
+ 
   coneSection(A,B,a,b);
-  } 
+  //coneSection(newA,newB,a,b);
+} 
 
 }//END OF LEG CLASS

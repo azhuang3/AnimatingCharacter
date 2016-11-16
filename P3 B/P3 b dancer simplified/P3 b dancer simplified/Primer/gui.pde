@@ -74,7 +74,7 @@ void mouseDragged()
 void displayHeader()  // Displays title and authors face on screen
     {
     scribeHeader(title,0); scribeHeaderRight(name); 
-    fill(white); image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
+   // fill(white); image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
     }
 void displayFooter()  // Displays help text at the bottom
     {
